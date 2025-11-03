@@ -9,6 +9,8 @@ import { enUS } from 'date-fns/locale';
 import { dateFnsLocalizer } from 'react-big-calendar';
 import { API_BASE_URL } from '../../config';
 
+console.log('Backend URL:', import.meta.env.VITE_BACKEND_URL);
+
 const locales = {
   'en-US': enUS,
 };
@@ -222,7 +224,7 @@ const AgendaPage = () => {
           // perform the requested action
           try {
             if (confirmContext.type === 'delete') {
-              const res = await fetch(`http://localhost:5000/api/deliveries/${confirmContext.id}`, { method: 'DELETE' });
+              const res = await fetch(`${API_BASE_URL}/api/deliveries/${confirmContext.id}`, { method: 'DELETE' });
               if (!res.ok) throw new Error('Delete failed');
               setActionTarget(null);
               setSelectedDelivery(null);
@@ -230,7 +232,7 @@ const AgendaPage = () => {
               window.dispatchEvent(new Event('refreshTrucks'));
               console.log('Deleted delivery', confirmContext.id);
             } else if (confirmContext.type === 'complete') {
-              const res = await fetch(`http://localhost:5000/api/deliveries/${confirmContext.id}`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ status: 'completed' }) });
+              const res = await fetch(`${API_BASE_URL}/api/deliveries/${confirmContext.id}`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ status: 'completed' }) });
               if (!res.ok) throw new Error('Update failed');
               const updated = await res.json();
               console.log('PUT /api/deliveries response:', updated);
