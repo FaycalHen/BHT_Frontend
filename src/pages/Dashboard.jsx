@@ -1,14 +1,14 @@
 
 import React, { useEffect, useState } from 'react';
 import { FaTruck, FaChartPie, FaList, FaClock, FaUser, FaChartBar } from 'react-icons/fa';
-
+import {API_BASE_URL} from '../../config'
 const Dashboard = () => {
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
   const [recentDeliveries, setRecentDeliveries] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/analytics')
+    fetch(`${API_BASE_URL}/api/analytics`)
       .then(res => res.json())
       .then(data => {
         setStats(data);
@@ -17,7 +17,7 @@ const Dashboard = () => {
       .catch(() => setLoading(false));
 
     // Fetch recent deliveries (last 5)
-    fetch('http://localhost:5000/api/deliveries?limit=5&sort=desc')
+    fetch(`${API_BASE_URL}/api/deliveries?limit=5&sort=desc`)
       .then(res => res.json())
       .then(data => setRecentDeliveries(data.slice(0, 5)))
       .catch(() => setRecentDeliveries([]));

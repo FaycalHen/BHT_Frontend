@@ -141,3 +141,4 @@ const Map = ({ userPosition, setUserPosition, routes = [], factoryPosition, sele
 };
 
 export default Map;
+

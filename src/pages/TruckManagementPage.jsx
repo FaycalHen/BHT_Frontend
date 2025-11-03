@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { API_BASE_URL } from '../../config';
 
 const TruckManagementPage = () => {
   // Edit modal logic and handlers
@@ -27,7 +28,7 @@ const TruckManagementPage = () => {
       setNotification({ message: 'All fields except driver are required.', type: 'error' });
       return;
     }
-    const res = await fetch(`http://localhost:5000/api/trucks/${editForm.truck_id}`, {
+    const res = await fetch(`${API_BASE_URL}/api/trucks/${editForm.truck_id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -42,7 +43,7 @@ const TruckManagementPage = () => {
       setEditForm({ truck_id: null, plateNumber: '', status: 'available', capacity_m3: '', driver_id: '' });
       setNotification({ message: 'Truck updated successfully.', type: 'success' });
       setLoading(true);
-      fetch('http://localhost:5000/api/trucks')
+      fetch('${API_BASE_URL}/api/trucks')
         .then(res => res.json())
         .then(data => {
           setTrucks(data);
@@ -72,13 +73,13 @@ const TruckManagementPage = () => {
   
   const handleRetireTruck = async (truck_id) => {
     // Called after confirmation in modal
-    const res = await fetch(`http://localhost:5000/api/trucks/${truck_id}`, {
+    const res = await fetch(`${API_BASE_URL}/api/trucks/${truck_id}`, {
       method: 'DELETE'
     });
     if (res.status === 204) {
       setNotification({ message: 'Truck retired successfully.', type: 'success' });
       setLoading(true);
-      fetch('http://localhost:5000/api/trucks')
+      fetch(`${API_BASE_URL}/api/trucks`)
         .then(res => res.json())
         .then(data => {
           setTrucks(data);
@@ -111,7 +112,7 @@ const TruckManagementPage = () => {
       setNotification({ message: 'Both name and phone are required.', type: 'error' });
       return;
     }
-    const res = await fetch('http://localhost:5000/api/drivers', {
+    const res = await fetch(`${API_BASE_URL}/api/drivers`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ name: driverForm.name, phone: driverForm.phone })
@@ -121,7 +122,7 @@ const TruckManagementPage = () => {
       setDriverForm({ name: '', phone: '' });
       setNotification({ message: 'Driver added successfully.', type: 'success' });
       // Refresh drivers
-      fetch('http://localhost:5000/api/drivers')
+      fetch(`${API_BASE_URL}/api/drivers`)
         .then(res => res.json())
         .then(data => setDrivers(data));
     } else {
@@ -141,7 +142,7 @@ const TruckManagementPage = () => {
   useEffect(() => {
     const fetchTrucks = () => {
       setLoading(true);
-      fetch('http://localhost:5000/api/trucks')
+      fetch(`${API_BASE_URL}/api/trucks`)
         .then(res => res.json())
         .then(data => {
           setTrucks(data);
@@ -160,7 +161,7 @@ const TruckManagementPage = () => {
 
   // Fetch drivers for assignment
   useEffect(() => {
-    fetch('http://localhost:5000/api/drivers')
+    fetch(`${API_BASE_URL}/api/drivers`)
       .then(res => res.json())
       .then(data => setDrivers(data))
       .catch(() => setDrivers([]));
@@ -179,7 +180,7 @@ const TruckManagementPage = () => {
       setNotification({ message: 'All fields except driver are required.', type: 'error' });
       return;
     }
-    const res = await fetch('http://localhost:5000/api/trucks', {
+    const res = await fetch(`${API_BASE_URL}/api/trucks`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -195,7 +196,7 @@ const TruckManagementPage = () => {
       setNotification({ message: 'Truck added successfully.', type: 'success' });
       // Refresh trucks
       setLoading(true);
-      fetch('http://localhost:5000/api/trucks')
+      fetch(`${API_BASE_URL}/api/trucks`)
         .then(res => res.json())
         .then(data => {
           setTrucks(data);

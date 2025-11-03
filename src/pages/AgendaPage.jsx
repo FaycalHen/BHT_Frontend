@@ -7,7 +7,7 @@ import { parseISO, format } from 'date-fns';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { enUS } from 'date-fns/locale';
 import { dateFnsLocalizer } from 'react-big-calendar';
-
+import { API_BASE_URL } from '../../config';
 
 const locales = {
   'en-US': enUS,
@@ -32,7 +32,7 @@ const AgendaPage = () => {
   // make fetchDeliveries reusable for actions
   const fetchDeliveries = () => {
     setLoading(true);
-    fetch('http://localhost:5000/api/deliveries')
+    fetch(`${API_BASE_URL}/api/deliveries`)
       .then(res => res.json())
       .then(data => {
         setDeliveries(data);
@@ -258,3 +258,4 @@ const AgendaPage = () => {
 };
 
 export default AgendaPage;
+

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-
+import { API_BASE_URL } from '../../config';
 const DeliverySchedulingPage = () => {
   const [customers, setCustomers] = useState([]);
   const [trucks, setTrucks] = useState([]);
@@ -15,10 +15,10 @@ const DeliverySchedulingPage = () => {
   const [notification, setNotification] = useState({ message: '', type: '' });
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/customers')
+    fetch(`${API_BASE_URL}/api/customers`)
       .then(res => res.json())
       .then(setCustomers);
-    fetch('http://localhost:5000/api/trucks')
+    fetch(`${API_BASE_URL}/api/trucks`)
       .then(res => res.json())
       .then(setTrucks);
   }, []);
@@ -48,7 +48,7 @@ const DeliverySchedulingPage = () => {
       setNotification({ message: 'All fields are required.', type: 'error' });
       return;
     }
-    const res = await fetch('http://localhost:5000/api/deliveries', {
+    const res = await fetch(`${API_BASE_URL}/api/deliveries`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({

@@ -15,3 +15,4 @@ const ConfirmationModal = ({ open, title, message, confirmLabel = 'Confirm', can
 };
 
 export default ConfirmationModal;
+

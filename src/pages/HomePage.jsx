@@ -6,7 +6,7 @@ import DeliveryRecapModal from '../components/DeliveryRecapModal';
 import { getGoogleMapsDirectionsUrl } from '../components/RouteQRCode';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import {API_BASE_URL} from '../../config';
 // Factory coordinates (Tlemcen)
 const FACTORY_POSITION = [34.937822, -1.378849];
 
@@ -68,7 +68,7 @@ const HomePage = () => {
     setFeasibilityLoading(true);
     try {
       // 1. Check feasibility (get batching info)
-      const feasRes = await fetch('http://localhost:5000/api/deliveries/check', {
+      const feasRes = await fetch(`${API_BASE_URL}/api/deliveries/check`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ date: form.date, time: form.time, volume: form.volume })
@@ -200,7 +200,7 @@ const HomePage = () => {
         
       };
       console.log('Sending delivery payload:', deliveryPayload);
-      fetch('http://localhost:5000/api/deliveries', {
+      fetch(`${API_BASE_URL}/api/deliveries`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(deliveryPayload)
@@ -227,7 +227,7 @@ const HomePage = () => {
       tripsPerTruck = feasibility.tripsPerTruck;
     }
     try {
-      const res = await fetch('http://localhost:5000/api/routes', {
+      const res = await fetch(`${API_BASE_URL}/api/routes`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ factory: [FACTORY_POSITION[1], FACTORY_POSITION[0]], customer: [parseFloat(lng), parseFloat(lat)], tripsPerTruck })
@@ -267,7 +267,7 @@ const HomePage = () => {
       tripsPerTruck
     };
     try {
-      const res = await fetch('http://localhost:5000/api/routes', {
+      const res = await fetch(`${API_BASE_URL}/api/routes`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)

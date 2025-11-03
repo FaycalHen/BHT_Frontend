@@ -21,3 +21,4 @@ export function getGoogleMapsDirectionsUrl(coords) {
  * Renders a QR code for a given URL.
  */
 // This module only exports the URL builder helper for Google Maps directions.
+

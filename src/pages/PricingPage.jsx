@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { FaMoneyBillWave, FaHistory, FaPlusCircle, FaCheckCircle } from 'react-icons/fa';
+import { API_BASE_URL } from '../../config';  // ADD THIS LINE
 
 const PARAM_LABELS = {
   fuel: 'Fuel Price (per L)',
@@ -25,7 +26,7 @@ export default function PricingPage() {
   const fetchParams = async () => {
     setLoading(true);
     try {
-      const res = await axios.get('http://localhost:5000/api/cost-parameters');
+      const res = await axios.get('${API_BASE_URL}/api/cost-parameters');
       // Ensure params is always an array
       setParams(Array.isArray(res.data) ? res.data : []);
     } catch (err) {
@@ -40,7 +41,7 @@ export default function PricingPage() {
     setHistory([]);
     setShowHistoryModal(true);
     try {
-      const res = await axios.get(`http://localhost:5000/api/cost-parameters/history/${type}`);
+      const res = await axios.get(`${API_BASE_URL}/api/cost-parameters/history/${type}`);
       setHistory(res.data);
     } catch (err) {
       setError('Failed to load history');
@@ -55,7 +56,7 @@ export default function PricingPage() {
     e.preventDefault();
     setError('');
     try {
-      await axios.post('http://localhost:5000/api/cost-parameters', form);
+      await axios.post('${API_BASE_URL}/api/cost-parameters', form);
       setForm({ type: '', value: '', currency: 'DA', note: '' });
       fetchParams();
     } catch (err) {
