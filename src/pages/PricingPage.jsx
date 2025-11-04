@@ -26,7 +26,7 @@ export default function PricingPage() {
   const fetchParams = async () => {
     setLoading(true);
     try {
-      const res = await axios.get('${API_BASE_URL}/api/cost-parameters');
+      const res = await axios.get(`${API_BASE_URL}/api/cost-parameters`);
       // Ensure params is always an array
       setParams(Array.isArray(res.data) ? res.data : []);
     } catch (err) {
@@ -56,7 +56,7 @@ export default function PricingPage() {
     e.preventDefault();
     setError('');
     try {
-      await axios.post('${API_BASE_URL}/api/cost-parameters', form);
+      await axios.post(`${API_BASE_URL}/api/cost-parameters`, form);
       setForm({ type: '', value: '', currency: 'DA', note: '' });
       fetchParams();
     } catch (err) {

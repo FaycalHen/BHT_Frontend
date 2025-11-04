@@ -9,7 +9,7 @@ import { enUS } from 'date-fns/locale';
 import { dateFnsLocalizer } from 'react-big-calendar';
 import { API_BASE_URL } from '../../config';
 
-console.log('Backend URL:', import.meta.env.VITE_BACKEND_URL);
+console.log('Backend URL:', import.meta.env);
 
 const locales = {
   'en-US': enUS,
